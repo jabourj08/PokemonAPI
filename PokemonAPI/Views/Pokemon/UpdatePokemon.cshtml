@@ -1,0 +1,9 @@
+﻿@model FavoritePokemon
+
+<form action="../Pokemon/UpdatePokemonNickname" method="post">
+    <input type="text" name="Id" value="@Model.NickName" hidden />
+  
+    <input type="submit" value="Save Changes!" />
+</form>
+
+
