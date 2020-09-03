@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -23,13 +24,39 @@ namespace PokemonAPI.Controllers
             return View(pokemonJSON);
         }
 
-        public async Task<IActionResult> GetPokemon()
+        public IActionResult SearchPokemon()
         {
-            var pokemon = await _pokemonDAL.GetPokemon();
-
-            return View(pokemon);
+            return View();
         }
 
+        public async Task<IActionResult> GetPokemon()
+        {
+            Pokemon pokemon = await _pokemonDAL.GetPokemon();
+
+            return RedirectToAction("SearchResults", pokemon);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchPokemonByName(string searchName)
+        {
+            var pokemon = await _pokemonDAL.GetPokemonByName(searchName);
+
+            return View("SearchResults", pokemon);
+        }
+
+        public async Task<IActionResult> SearchPokemonById(int id)
+        {
+            var pokemon = await _pokemonDAL.GetPokemonById(id);
+
+            return View("SearchResults", pokemon);
+        }
+
+        public async Task<IActionResult> SearchPokemonByType(string type)
+        {
+            var pokemonType = await _pokemonDAL.GetPokemonByType(type);
+
+            return View("SearchResultsType", pokemonType);
+        }
 
 
         public IActionResult Index()
