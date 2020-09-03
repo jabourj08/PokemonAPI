@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,12 +27,36 @@ namespace PokemonAPI.Models
 
             return pokemonJSON;
         }
-
         public async Task<Pokemon> GetPokemon()
         {
             var client = GetClient();
             var response = await client.GetAsync("pokemon/3");
             Pokemon pokemon = await response.Content.ReadAsAsync<Pokemon>();
+
+            return pokemon;
+        }
+
+        public async Task<Pokemon> GetPokemonByName(string searchName)
+        {
+            var client = GetClient();
+            var response = await client.GetAsync($"pokemon/{searchName}");
+            var pokemon = await response.Content.ReadAsAsync<Pokemon>();
+
+            return pokemon;
+        }
+        public async Task<Pokemon> GetPokemonById(int id)
+        {
+            var client = GetClient();
+            var response = await client.GetAsync($"pokemon/{id.ToString()}");
+            var pokemon = await response.Content.ReadAsAsync<Pokemon>();
+
+            return pokemon;
+        }
+        public async Task<Pokemon> GetPokemonByType(string type)
+        {
+            var client = GetClient();
+            var response = await client.GetAsync($"type/{type}");
+            var pokemon = await response.Content.ReadAsAsync<Pokemon>();
 
             return pokemon;
         }

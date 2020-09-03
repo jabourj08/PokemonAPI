@@ -12,6 +12,7 @@ namespace PokemonAPI.Models
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
             FavoritePokemon = new HashSet<FavoritePokemon>();
+
         }
 
         public string Id { get; set; }
