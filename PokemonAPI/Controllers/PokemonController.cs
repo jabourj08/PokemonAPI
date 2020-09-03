@@ -100,7 +100,17 @@ namespace PokemonAPI.Controllers
         }
 
 
-       
+        public IActionResult SaveChanges(FavoritePokemon updatedName)
+        {
+            FavoritePokemon pokemonName = _pokemonContext.FavoritePokemon.Find(updatedName.Id);
+            pokemonName.Nickname = updatedName.Nickname;
+
+            _pokemonContext.Entry(pokemonName).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _pokemonContext.Update(pokemonName);
+            _pokemonContext.SaveChanges();
+
+            return RedirectToAction("Favorites");
+        }
 
         public IActionResult Index()
         {
@@ -128,16 +138,12 @@ namespace PokemonAPI.Controllers
         
         public async Task<IActionResult> AddPokemon(int id)
         {
-            
             string activeUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value; //finds the user id of the logged in user
-
-
 
             var newFav = new FavoritePokemon();
             var newpokemon =await  _pokemonDAL.GetPokemonById(id);
 
-            newFav.Nickname = newpokemon.name;
-
+            //newFav.Nickname = newpokemon.name;
 
             string typeConcat = "";
             string statConcat = "";
