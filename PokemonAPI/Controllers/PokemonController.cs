@@ -32,6 +32,11 @@ namespace PokemonAPI.Controllers
             return View();
         }
 
+        public IActionResult Favoriteslol()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> GetPokemon()
         {
             Pokemon pokemon = await _pokemonDAL.GetPokemon();
@@ -44,7 +49,7 @@ namespace PokemonAPI.Controllers
         {
             var pokemon = await _pokemonDAL.GetPokemonByName(searchName);
 
-            if (ModelState.IsValid)
+            if (pokemon != null)
             {
                 return View("SearchResults", pokemon);
             }
