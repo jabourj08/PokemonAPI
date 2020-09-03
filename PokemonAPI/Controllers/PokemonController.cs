@@ -61,16 +61,16 @@ namespace PokemonAPI.Controllers
             return View("SearchResultsType", pokemonType);
         }
 
-        public IActionResult UpdatePokemon(int id)
+        public IActionResult UpdatePokemon(FavoritePokemon favoritePokemon)
         {
-            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
-            if (pokemon == null)
+            //FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
+            if (favoritePokemon == null)
             {
                 return RedirectToAction("Favorites");
             }
             else
             {
-                return View(pokemon);
+                return View(favoritePokemon);
             }
         }
         public IActionResult Index()
@@ -134,13 +134,10 @@ namespace PokemonAPI.Controllers
             newFav.Name = newpokemon.name;
             newFav.PokemonId = newpokemon.id;
             newFav.Height = newpokemon.height.ToString();
-            //newFav.Sprite = newpokemon.sprites.ToString();
             newFav.Sprite = spriteConcat;
-            //newFav.Type = newpokemon.types.ToString();
             newFav.Type = typeConcat;
             newFav.Weight = newpokemon.weight.ToString();
             newFav.BaseExp = newpokemon.base_experience.ToString();
-            //newFav.Stats = newpokemon.stats.ToString();
             newFav.Stats = statConcat;
             newFav.UserId = activeUserId;
            
@@ -149,7 +146,18 @@ namespace PokemonAPI.Controllers
                 _pokemonContext.FavoritePokemon.Add(newFav);
                 _pokemonContext.SaveChanges(); 
             }
-            return RedirectToAction("UpdatePokemon", newFav.PokemonId);
+            return RedirectToAction("Favorites");
+        }
+
+        public IActionResult DeletePokemon(int id)
+        {
+            var deletePokemon = _pokemonContext.FavoritePokemon.Find(id);
+            if (deletePokemon != null)
+            {
+                _pokemonContext.FavoritePokemon.Remove(deletePokemon);
+                _pokemonContext.SaveChanges();
+            }
+            return RedirectToAction("Favorites");
         }
     }
 }
