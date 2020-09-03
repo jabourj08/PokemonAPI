@@ -22,10 +22,7 @@ namespace PokemonAPI.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-<<<<<<< HEAD
         public virtual DbSet<FavoritePokemon> FavoritePokemon { get; set; }
-=======
->>>>>>> a0f7a559a60173d9ccdfb2c607a2378e9681a65b
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -136,16 +133,39 @@ namespace PokemonAPI.Models
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
 
-<<<<<<< HEAD
             modelBuilder.Entity<FavoritePokemon>(entity =>
             {
+                entity.Property(e => e.BaseExp)
+                    .HasColumnName("baseExp")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Height)
+                    .HasColumnName("height")
+                    .HasMaxLength(100);
+
                 entity.Property(e => e.Name).HasMaxLength(20);
 
                 entity.Property(e => e.NickName).HasMaxLength(50);
 
+                entity.Property(e => e.Sprite)
+                    .HasColumnName("sprite")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.Stats)
+                    .HasColumnName("stats")
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("type")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasMaxLength(450);
+
+                entity.Property(e => e.Weight)
+                    .HasColumnName("weight")
+                    .HasMaxLength(100);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.FavoritePokemon)
@@ -153,9 +173,6 @@ namespace PokemonAPI.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__FavoriteP__UserI__5CD6CB2B");
             });
-=======
-
->>>>>>> a0f7a559a60173d9ccdfb2c607a2378e9681a65b
 
             OnModelCreatingPartial(modelBuilder);
         }

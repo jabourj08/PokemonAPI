@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Models;
@@ -24,6 +25,24 @@ namespace PokemonAPI.Controllers
             return View(pokemonJSON);
         }
 
+        //public IActionResult Favorites()
+        //{
+        //    string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+        //    if (id != null && id != "")
+        //    {
+        //        List<FavoritePokemon> myPokemon = _PokemonContext.PokemonDb.Where(x => x.UserId == id).ToList();
+
+        //        return View(myPokemon);
+        //    }
+        //    else
+        //    {
+        //        List<FavoritePokemon> myPokemon = _PokemonContext.PokemonDb.ToList();
+
+        //        return View(myPokemon);
+        //    }
+        //}
+
         public IActionResult SearchPokemon()
         {
             return View();
@@ -33,7 +52,7 @@ namespace PokemonAPI.Controllers
         {
             Pokemon pokemon = await _pokemonDAL.GetPokemon();
 
-            return RedirectToAction("SearchResults", pokemon);
+            return View(pokemon);
         }
 
         [HttpPost]
