@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using PokemonAPI.Models;
 
 namespace PokemonAPI.Controllers
 {
@@ -69,17 +67,29 @@ namespace PokemonAPI.Controllers
             return View("SearchResultsType", pokemonType);
         }
 
-        public IActionResult UpdatePokemon(FavoritePokemon favoritePokemon)
+        public IActionResult UpdatePokemon(int id)
         {
-            //FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
-            if (favoritePokemon == null)
+            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
+            if (pokemon == null)
             {
                 return RedirectToAction("Favorites");
             }
             else
             {
-                return View(favoritePokemon);
+                return View(pokemon);
             }
+        }
+
+        public IActionResult SaveChanges(FavoritePokemon updatedName)
+        {
+            FavoritePokemon pokemonName = _pokemonContext.FavoritePokemon.Find(updatedName.Id);
+            pokemonName.NickName = updatedName.NickName;
+         
+            _pokemonContext.Entry(pokemonName).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _pokemonContext.Update(pokemonName);
+            _pokemonContext.SaveChanges();
+
+            return RedirectToAction("Favorites");
         }
         public IActionResult Index()
         {
