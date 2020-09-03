@@ -33,7 +33,7 @@ namespace PokemonAPI.Controllers
         {
             Pokemon pokemon = await _pokemonDAL.GetPokemon();
 
-            return RedirectToAction("SearchResults", pokemon);
+            return View("SearchResults", pokemon);
         }
 
         [HttpPost]
