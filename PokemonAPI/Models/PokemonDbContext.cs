@@ -24,15 +24,12 @@ namespace PokemonAPI.Models
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<FavoritePokemon> FavoritePokemon { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-
-                optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=PokemonDb;Trusted_Connection=True;");
-
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=PokemonDb;Trusted_Connection=True;");
             }
         }
 
@@ -138,13 +135,37 @@ namespace PokemonAPI.Models
 
             modelBuilder.Entity<FavoritePokemon>(entity =>
             {
+                entity.Property(e => e.BaseExp)
+                    .HasColumnName("baseExp")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Height)
+                    .HasColumnName("height")
+                    .HasMaxLength(100);
+
                 entity.Property(e => e.Name).HasMaxLength(20);
 
                 entity.Property(e => e.NickName).HasMaxLength(50);
 
+                entity.Property(e => e.Sprite)
+                    .HasColumnName("sprite")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.Stats)
+                    .HasColumnName("stats")
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("type")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasMaxLength(450);
+
+                entity.Property(e => e.Weight)
+                    .HasColumnName("weight")
+                    .HasMaxLength(100);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.FavoritePokemon)
