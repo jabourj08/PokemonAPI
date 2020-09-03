@@ -22,7 +22,6 @@ namespace PokemonAPI.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-
         public virtual DbSet<FavoritePokemon> FavoritePokemon { get; set; }
 
 
@@ -153,7 +152,6 @@ namespace PokemonAPI.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__FavoriteP__UserI__5CD6CB2B");
             });
-
 
             OnModelCreatingPartial(modelBuilder);
         }
