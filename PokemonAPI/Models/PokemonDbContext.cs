@@ -134,6 +134,7 @@ namespace PokemonAPI.Models
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
+
             modelBuilder.Entity<FavoritePokemon>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(20);
@@ -150,6 +151,7 @@ namespace PokemonAPI.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__FavoriteP__UserI__5CD6CB2B");
             });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
