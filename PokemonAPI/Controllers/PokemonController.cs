@@ -27,24 +27,6 @@ namespace PokemonAPI.Controllers
             return View(pokemonJSON);
         }
 
-        //public IActionResult Favorites()
-        //{
-        //    string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-        //    if (id != null && id != "")
-        //    {
-        //        List<FavoritePokemon> myPokemon = _PokemonContext.PokemonDb.Where(x => x.UserId == id).ToList();
-
-        //        return View(myPokemon);
-        //    }
-        //    else
-        //    {
-        //        List<FavoritePokemon> myPokemon = _PokemonContext.PokemonDb.ToList();
-
-        //        return View(myPokemon);
-        //    }
-        //}
-
         public IActionResult SearchPokemon()
         {
             return View();
@@ -84,7 +66,7 @@ namespace PokemonAPI.Controllers
             FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
             if (pokemon == null)
             {
-                return View("Favorites");
+                return RedirectToAction("Favorites");
             }
             else
             {
@@ -117,18 +99,49 @@ namespace PokemonAPI.Controllers
         
         public async Task<IActionResult> AddPokemon(int id)
         {
+            
             string activeUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value; //finds the user id of the logged in user
 
             var newFav = new FavoritePokemon();
             var newpokemon =await  _pokemonDAL.GetPokemonById(id);
+
+            string typeConcat = "";
+            string statConcat = "";
+            string spriteConcat = "";
+
+            for (int i = 0; i < newpokemon.types.Length; i++)
+            {
+                typeConcat += newpokemon.types[i].type.name;
+                if (i != newpokemon.types.Length - 1)
+                {
+                    typeConcat += ",";
+                }
+            }
+
+            for (int i = 0; i < newpokemon.stats.Length; i++)
+            {
+                statConcat += newpokemon.stats[i].stat.name;
+                statConcat += ": ";
+                statConcat += newpokemon.stats[i].base_stat;
+                if (i != newpokemon.stats.Length - 1)
+                {
+                    statConcat += ",";
+                }
+            }
+
+            spriteConcat += newpokemon.sprites.front_default + "," + newpokemon.sprites.front_shiny;
+
             newFav.Name = newpokemon.name;
             newFav.PokemonId = newpokemon.id;
             newFav.Height = newpokemon.height.ToString();
-            newFav.Sprite = newpokemon.sprites.ToString();
-            newFav.Type = newpokemon.types.ToString();
+            //newFav.Sprite = newpokemon.sprites.ToString();
+            newFav.Sprite = spriteConcat;
+            //newFav.Type = newpokemon.types.ToString();
+            newFav.Type = typeConcat;
             newFav.Weight = newpokemon.weight.ToString();
             newFav.BaseExp = newpokemon.base_experience.ToString();
-            newFav.Stats = newpokemon.stats.ToString();
+            //newFav.Stats = newpokemon.stats.ToString();
+            newFav.Stats = statConcat;
             newFav.UserId = activeUserId;
            
             if (ModelState.IsValid)

@@ -30,23 +30,24 @@
                     nameUpper += p.Name.Substring(1, p.Name.Length - 1);
                 }
             <td class="align-middle text-center font-weight-bold">@nameUpper</td>
-            <td class="align-middle text-center font-weight-bold">ViewBag.NickName @*CHANGE THIS*@ </td>
+            <td class="align-middle text-center font-weight-bold">@p.NickName</td>
             <td class="align-middle text-center font-weight-bold">
-                @{ for (int i = 0; i < p.Type.Length; i++)
+                @{ 
+                    string[] typeArray = p.Type.Split(',');
+                    for (int i = 0; i < typeArray.Length; i++)
                     {
-                        @p.Type;
-
-                        if (i != p.Type.Length - 1)
-                        {
-                            <br />
-                        }
+                        @typeArray[i];
+                        <br />
                     }
                 }
             </td>
-            <td>
-                @{ for (int i = 0; i < p.Stats.Length; i++)
+            <td class="align-middle font-weight-bold">
+                @{
+                    string[] statArray = p.Stats.Split(',');
+                    for (int i = 0; i < statArray.Length; i++)
                     {
-                        <div>@p.Stats</div>
+                        @statArray[i];
+                        <br />
                     }
                 }
             </td>
@@ -54,30 +55,29 @@
             <td class="align-middle text-center font-weight-bold">@p.Weight</td>
             <td class="align-middle text-center font-weight-bold">@p.BaseExp</td>
 
-            <td class="align-middle text-center">
+            <td class="align-middle text-center font-weight-bold">
+                @{
+                    string[] spriteArray = p.Sprite.Split(',');
+                }
+
                 Default<br />
-                <img src="@p.Sprite" alt="@nameUpper" title="@nameUpper" /><br />
+                <img src="@spriteArray[0]" alt="@nameUpper" title="@nameUpper" /><br />
                 Shiny<br />
-                <img src="@p.Sprite" alt="Shiny @nameUpper" title="Shiny @nameUpper" />
+                <img src="@spriteArray[1]" alt="Shiny @nameUpper" title="Shiny @nameUpper" />
             </td>
-            
-            
-            
-            
-            
+
             <td class="align-middle text-center">
                 <button class="btn-danger btn" onclick="confirmDelete()">Remove</button><br /><br />
                 <a href="../Pokemon/UpdatePokemon?id=@p.Id"><button class="btn-warning btn">Update</button></a>
 
-
                 <script type="text/javascript">
                     function confirmDelete() {
-                        var url = '../Pokemon/RemoveFromFavorites?id=@p.Id';
-                        var c1 = confirm("Are you sure you want to delete this task? OK=Yes, Cancel=No")
+                        var url = '../Pokemon/DeletePokemon?id=@p.Id';
+                        var c1 = confirm("Are you sure you want to delete this Pokemon? OK=Yes, Cancel=No")
                         if (c1 == true) {
-                            var c2 = confirm("Are you REALLY sure you want to delete this task?? OK=Yes, Cancel=No")
+                            var c2 = confirm("Are you REALLY sure you want to delete this Pokemon?? OK=Yes, Cancel=No")
                             if (c2 == true) {
-                                var c3 = confirm("Are you REALLY REALLY sure you want to delete this task??? OK=Yes, Cancel=No")
+                                var c3 = confirm("Are you REALLY REALLY sure you want to delete this Pokemon??? OK=Yes, Cancel=No")
                                 if (c3 == true) {
                                     window.location.href = url;
                                 }
@@ -86,7 +86,6 @@
                     }
                 </script>
             </td>
-
         </tr>
     }
 </table>
