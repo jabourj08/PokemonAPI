@@ -26,8 +26,8 @@
             @*Capitalize Name*@
                 @{
                     string nameUpper = "";
-                    nameUpper += p.Name[0].ToString().ToUpper();
-                    nameUpper += p.Name.Substring(1, p.Name.Length - 1);
+                    nameUpper += p.Nickname[0].ToString().ToUpper();
+                    nameUpper += p.Nickname.Substring(1, p.Nickname.Length - 1);
                 }
             <td class="align-middle text-center font-weight-bold">@nameUpper</td>
             <td class="align-middle text-center font-weight-bold">@p.NickName</td>
@@ -89,3 +89,4 @@
         </tr>
     }
 </table>
+<a href="../Pokemon/UpdatePokemon" class="btn-primary">Update Your Pokemons Nickname!</a>

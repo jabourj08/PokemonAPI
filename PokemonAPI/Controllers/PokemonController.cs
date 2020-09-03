@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using PokemonAPI.Models;
 
 namespace PokemonAPI.Controllers
 {
@@ -73,19 +71,37 @@ namespace PokemonAPI.Controllers
 
             return View("SearchResultsType", pokemonType);
         }
-
-        public IActionResult UpdatePokemon(FavoritePokemon favoritePokemon)
+        [HttpPost]
+        public IActionResult UpdatePokemon(FavoritePokemon pokeName)
         {
-            //FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
-            if (favoritePokemon == null)
+
+            FavoritePokemon pokemonNickname = _pokemonContext.FavoritePokemon.Find(pokeName);
+
+            pokemonNickname.Nickname = pokeName.Nickname;
+            _pokemonContext.Entry(pokemonNickname).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _pokemonContext.Update(pokemonNickname);
+            _pokemonContext.SaveChanges();
+            return RedirectToAction("Favorites");
+           // return View();
+        }
+        [HttpGet]
+        public IActionResult UpdatePokemon(int id)
+        {
+            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
+            if (pokemon == null)
+
             {
                 return RedirectToAction("Favorites");
             }
             else
             {
-                return View(favoritePokemon);
+                return View(pokemon);
             }
         }
+
+
+       
+
         public IActionResult Index()
         {
             return View();
@@ -119,6 +135,9 @@ namespace PokemonAPI.Controllers
 
             var newFav = new FavoritePokemon();
             var newpokemon =await  _pokemonDAL.GetPokemonById(id);
+
+            newFav.Nickname = newpokemon.name;
+
 
             string typeConcat = "";
             string statConcat = "";
@@ -173,6 +192,7 @@ namespace PokemonAPI.Controllers
                 _pokemonContext.SaveChanges();
             }
             return RedirectToAction("Favorites");
+
         }
     }
 }
