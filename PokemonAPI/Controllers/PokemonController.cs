@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using PokemonAPI.Models;
 
 namespace PokemonAPI.Controllers
 {
@@ -26,10 +24,7 @@ namespace PokemonAPI.Controllers
 
             return View(pokemonJSON);
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> 4977398e8ebf6d4b70172b2522dac3829979d635
         public IActionResult SearchPokemon()
         {
             return View();
@@ -78,9 +73,6 @@ namespace PokemonAPI.Controllers
             FavoritePokemon pokemonNickname = _pokemonContext.FavoritePokemon.Find(pokeName);
 
             pokemonNickname.Nickname = pokeName.Nickname;
-            
-
-<<<<<<< HEAD
             _pokemonContext.Entry(pokemonNickname).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _pokemonContext.Update(pokemonNickname);
             _pokemonContext.SaveChanges();
@@ -88,24 +80,22 @@ namespace PokemonAPI.Controllers
            // return View();
         }
         [HttpGet]
-        public IActionResult UpdatePokemon(int Id)
+        public IActionResult UpdatePokemon(int id)
         {
-            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(Id);
+            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
             if (pokemon == null)
-=======
-        public IActionResult UpdatePokemon(FavoritePokemon favoritePokemon)
-        {
-            //FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
-            if (favoritePokemon == null)
->>>>>>> 4977398e8ebf6d4b70172b2522dac3829979d635
+
             {
                 return RedirectToAction("Favorites");
             }
             else
             {
-                return View(favoritePokemon);
+                return View(pokemon);
             }
         }
+
+
+       
 
         public IActionResult Index()
         {
@@ -140,9 +130,9 @@ namespace PokemonAPI.Controllers
 
             var newFav = new FavoritePokemon();
             var newpokemon =await  _pokemonDAL.GetPokemonById(id);
-<<<<<<< HEAD
+
             newFav.Nickname = newpokemon.name;
-=======
+
 
             string typeConcat = "";
             string statConcat = "";
@@ -171,7 +161,6 @@ namespace PokemonAPI.Controllers
             spriteConcat += newpokemon.sprites.front_default + "," + newpokemon.sprites.front_shiny;
 
             newFav.Name = newpokemon.name;
->>>>>>> 4977398e8ebf6d4b70172b2522dac3829979d635
             newFav.PokemonId = newpokemon.id;
             newFav.Height = newpokemon.height.ToString();
             newFav.Sprite = spriteConcat;
@@ -186,9 +175,6 @@ namespace PokemonAPI.Controllers
                 _pokemonContext.FavoritePokemon.Add(newFav);
                 _pokemonContext.SaveChanges(); 
             }
-<<<<<<< HEAD
-            return RedirectToAction("UpdatePokemon", newFav.Id);
-=======
             return RedirectToAction("Favorites");
         }
 
@@ -201,7 +187,7 @@ namespace PokemonAPI.Controllers
                 _pokemonContext.SaveChanges();
             }
             return RedirectToAction("Favorites");
->>>>>>> 4977398e8ebf6d4b70172b2522dac3829979d635
+
         }
     }
 }
