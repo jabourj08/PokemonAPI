@@ -26,25 +26,6 @@ namespace PokemonAPI.Controllers
 
             return View(pokemonJSON);
         }
-
-        //public IActionResult Favorites()
-        //{
-        //    string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-        //    if (id != null && id != "")
-        //    {
-        //        List<FavoritePokemon> myPokemon = _PokemonContext.PokemonDb.Where(x => x.UserId == id).ToList();
-
-        //        return View(myPokemon);
-        //    }
-        //    else
-        //    {
-        //        List<FavoritePokemon> myPokemon = _PokemonContext.PokemonDb.ToList();
-
-        //        return View(myPokemon);
-        //    }
-        //}
-
         public IActionResult SearchPokemon()
         {
             return View();
@@ -78,19 +59,35 @@ namespace PokemonAPI.Controllers
 
             return View("SearchResultsType", pokemonType);
         }
-
-        public IActionResult UpdatePokemon(int id)
+        [HttpPost]
+        public IActionResult UpdatePokemon(FavoritePokemon pokeName)
         {
-            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
+
+            FavoritePokemon pokemonNickname = _pokemonContext.FavoritePokemon.Find(pokeName);
+
+            pokemonNickname.Nickname = pokeName.Nickname;
+            
+
+            _pokemonContext.Entry(pokemonNickname).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _pokemonContext.Update(pokemonNickname);
+            _pokemonContext.SaveChanges();
+            return RedirectToAction("Favorites");
+           // return View();
+        }
+        [HttpGet]
+        public IActionResult UpdatePokemon(int Id)
+        {
+            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(Id);
             if (pokemon == null)
             {
-                return View("Favorites");
+                return RedirectToAction("Favorites");
             }
             else
             {
                 return View(pokemon);
             }
         }
+
         public IActionResult Index()
         {
             return View();
@@ -121,7 +118,7 @@ namespace PokemonAPI.Controllers
 
             var newFav = new FavoritePokemon();
             var newpokemon =await  _pokemonDAL.GetPokemonById(id);
-            newFav.Name = newpokemon.name;
+            newFav.Nickname = newpokemon.name;
             newFav.PokemonId = newpokemon.id;
             newFav.Height = newpokemon.height.ToString();
             newFav.Sprite = newpokemon.sprites.ToString();
@@ -136,7 +133,7 @@ namespace PokemonAPI.Controllers
                 _pokemonContext.FavoritePokemon.Add(newFav);
                 _pokemonContext.SaveChanges(); 
             }
-            return RedirectToAction("UpdatePokemon", newFav.PokemonId);
+            return RedirectToAction("UpdatePokemon", newFav.Id);
         }
     }
 }
