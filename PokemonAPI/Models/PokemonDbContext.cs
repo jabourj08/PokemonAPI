@@ -23,6 +23,7 @@ namespace PokemonAPI.Models
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public virtual DbSet<FavoritePokemon> FavoritePokemon { get; set; }
 =======
 <<<<<<< HEAD
@@ -30,6 +31,10 @@ namespace PokemonAPI.Models
 =======
 >>>>>>> a0f7a559a60173d9ccdfb2c607a2378e9681a65b
 >>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
+=======
+        public virtual DbSet<FavoritePokemon> FavoritePokemon { get; set; }
+
+>>>>>>> 2516b02fba0beadb171911135bae14d7dc76a761
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,10 +42,16 @@ namespace PokemonAPI.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
 <<<<<<< HEAD
+<<<<<<< HEAD
                 optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=PokemonDb;Trusted_Connection=True;");
 =======
                 optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=PokemonDb;Trusted_Connection=True;");
 >>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
+=======
+
+                optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=PokemonDb;Trusted_Connection=True;");
+
+>>>>>>> 2516b02fba0beadb171911135bae14d7dc76a761
             }
         }
 
@@ -145,9 +156,12 @@ namespace PokemonAPI.Models
             });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
+=======
+>>>>>>> 2516b02fba0beadb171911135bae14d7dc76a761
             modelBuilder.Entity<FavoritePokemon>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(20);
@@ -165,11 +179,14 @@ namespace PokemonAPI.Models
                     .HasConstraintName("FK__FavoriteP__UserI__5CD6CB2B");
             });
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 
 >>>>>>> a0f7a559a60173d9ccdfb2c607a2378e9681a65b
 >>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
+=======
+>>>>>>> 2516b02fba0beadb171911135bae14d7dc76a761
 
             OnModelCreatingPartial(modelBuilder);
         }
