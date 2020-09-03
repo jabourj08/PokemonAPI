@@ -11,7 +11,14 @@ namespace PokemonAPI.Models
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
+<<<<<<< HEAD
             FavoritePokemon = new HashSet<FavoritePokemon>();
+=======
+<<<<<<< HEAD
+            FavoritePokemon = new HashSet<FavoritePokemon>();
+=======
+>>>>>>> a0f7a559a60173d9ccdfb2c607a2378e9681a65b
+>>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
         }
 
         public string Id { get; set; }
@@ -34,6 +41,13 @@ namespace PokemonAPI.Models
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
+<<<<<<< HEAD
         public virtual ICollection<FavoritePokemon> FavoritePokemon { get; set; }
+=======
+<<<<<<< HEAD
+        public virtual ICollection<FavoritePokemon> FavoritePokemon { get; set; }
+=======
+>>>>>>> a0f7a559a60173d9ccdfb2c607a2378e9681a65b
+>>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
     }
 }

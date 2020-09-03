@@ -1,0 +1,106 @@
+﻿@model List<Pokemon>
+
+@{
+    ViewData["Title"] = "Favorites";
+}
+
+<h1>Favorite Pok&eacute;mon</h1>
+
+<table class="table table-bordered table-info shadow table-hover">
+    <tr>
+        <th class="text-center text-uppercase">Pok&eacute;dex</th>
+        <th class="text-center text-uppercase">Sprite</th>
+        <th class="text-center text-uppercase">Pok&eacute;mon Name</th>
+        <th class="text-center text-uppercase">Nickname</th>
+        <th class="text-center text-uppercase">Type</th>
+        <th class="text-center text-uppercase">Abilities</th>
+        <th class="text-center text-uppercase">Stats</th>
+        <th class="text-center text-uppercase">Utility</th>
+    </tr>
+
+    @foreach (Pokemon p in Model)
+    {
+        <tr>
+            <td class="align-middle text-center font-weight-bold">@p.order</td>
+            <td class="align-middle text-center">
+                @*Capitalize Name*@
+                @{
+                    string nameUpper = "";
+                    nameUpper += p.name[0].ToString().ToUpper();
+                    nameUpper += p.name.Substring(1, p.name.Length - 1);
+                }
+                <img src="@p.sprites.front_default" alt="@nameUpper" title="@nameUpper" />
+            </td>
+            <td class="align-middle text-center font-weight-bold">@nameUpper</td>
+            <td class="align-middle text-center font-weight-bold">ViewBag.NickName @*CHANGE THIS*@ </td>
+            <td class="align-middle text-center font-weight-bold">
+                @*Create pokemon type string(ex. grass/poison)*@
+                @{string pokeType = "";}
+                @{ for (int i = 0; i < p.types.Length; i++)
+                    {
+                        pokeType += p.types[i].type.name;
+
+                        if (i != p.types.Length - 1)
+                        {
+                            pokeType += "/";
+                        }
+                    }
+                }
+                @pokeType
+            </td>
+            <td>
+                @*Create pokemon abilities string(ex. overgrow, chlorophyll)*@
+                @{string abilities = "";}
+                @{ for (int i = 0; i < p.abilities.Length; i++)
+                    {
+                        abilities += p.abilities[i].ability.name;
+
+                        if (i != p.abilities.Length - 1)
+                        {
+                            abilities += ", ";
+                        }
+                    }
+                }
+                @abilities
+            </td>
+            <td>
+                @*Create pokemon stats strings(ex. hp: 60)*@
+                @{string stats;}
+                @{ for (int i = 0; i < p.stats.Length; i++)
+                    {
+                        stats = "";
+                        stats += p.stats[i].stat.name;
+                        stats += ": ";
+                        stats += p.stats[i].base_stat;
+
+                        if (i != p.stats.Length - 1)
+                        {
+                            @stats<br />
+                        }
+                    }
+                }
+            </td>
+            <td class="align-middle text-center">
+                <button class="btn-danger btn" onclick="confirmDelete()">Remove</button><br /><br />
+                <a href="../Pokemon/UpdatePokemon?id=@p.id"><button class="btn-warning btn">Update</button></a>
+
+                <script type="text/javascript">
+                    function confirmDelete() {
+                        var url = '../Pokemon/RemoveFromFavorites?id=@p.id';
+                        var c1 = confirm("Are you sure you want to delete this task? OK=Yes, Cancel=No")
+                        if (c1 == true) {
+                            var c2 = confirm("Are you REALLY sure you want to delete this task?? OK=Yes, Cancel=No")
+                            if (c2 == true) {
+                                var c3 = confirm("Are you REALLY REALLY sure you want to delete this task??? OK=Yes, Cancel=No")
+                                if (c3 == true) {
+                                    window.location.href = url;
+                                }
+                            }
+                        }
+                    }
+                </script>
+            </td>
+
+        </tr>
+    }
+</table>
