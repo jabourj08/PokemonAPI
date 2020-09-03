@@ -11,11 +11,18 @@ namespace PokemonAPI.Controllers
     public class PokemonController : Controller
     {
         private readonly PokemonDAL _pokemonDAL;
+        private readonly PokemonDbContext _pokemonContext;
 
         public PokemonController()
         {
             _pokemonDAL = new PokemonDAL();
+            
+            _pokemonContext = new PokemonDbContext();
         }
+
+        
+
+       
 
         public async Task<IActionResult> PokemonJSON()
         {
@@ -33,7 +40,7 @@ namespace PokemonAPI.Controllers
         {
             Pokemon pokemon = await _pokemonDAL.GetPokemon();
 
-            return RedirectToAction("SearchResults", pokemon);
+            return View(pokemon);
         }
 
         [HttpPost]
@@ -58,7 +65,18 @@ namespace PokemonAPI.Controllers
             return View("SearchResultsType", pokemonType);
         }
 
-
+        public IActionResult UpdatePokemon(int id)
+        {
+            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
+            if (pokemon == null)
+            {
+                return View();
+            }
+            else
+            {
+                return View(pokemon);
+            }
+        }
         public IActionResult Index()
         {
             return View();

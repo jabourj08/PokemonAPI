@@ -22,25 +22,16 @@ namespace PokemonAPI.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-<<<<<<< HEAD
+
         public virtual DbSet<FavoritePokemon> FavoritePokemon { get; set; }
-=======
-<<<<<<< HEAD
-        public virtual DbSet<FavoritePokemon> FavoritePokemon { get; set; }
-=======
->>>>>>> a0f7a559a60173d9ccdfb2c607a2378e9681a65b
->>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-<<<<<<< HEAD
+
                 optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=PokemonDb;Trusted_Connection=True;");
-=======
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=PokemonDb;Trusted_Connection=True;");
->>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
             }
         }
 
@@ -143,11 +134,6 @@ namespace PokemonAPI.Models
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
             modelBuilder.Entity<FavoritePokemon>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(20);
@@ -164,13 +150,6 @@ namespace PokemonAPI.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__FavoriteP__UserI__5CD6CB2B");
             });
-<<<<<<< HEAD
-=======
-=======
-
->>>>>>> a0f7a559a60173d9ccdfb2c607a2378e9681a65b
->>>>>>> 695537b888ea6c06860ac93f4937b82a8b30ea43
-
             OnModelCreatingPartial(modelBuilder);
         }
 
