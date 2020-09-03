@@ -62,7 +62,15 @@ namespace PokemonAPI.Controllers
         {
             var pokemon = await _pokemonDAL.GetPokemonByName(searchName);
 
-            return View("SearchResults", pokemon);
+            if (ModelState.IsValid)
+            {
+                return View("SearchResults", pokemon);
+            }
+            else
+            {
+                return View("SearchPokemon");
+            }
+            
         }
 
         public async Task<IActionResult> SearchPokemonById(int id)
@@ -118,6 +126,8 @@ namespace PokemonAPI.Controllers
         public async Task<IActionResult> AddPokemon(int id)
         {
             string activeUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value; //finds the user id of the logged in user
+
+
 
             var newFav = new FavoritePokemon();
             var newpokemon =await  _pokemonDAL.GetPokemonById(id);

@@ -4,15 +4,7 @@
 <table id="PokemonInfoTable" class="table table-bordered shadow table-hover table-info">
     <tr class="table table-bordered shadow table-hover table-info">
         <th>Name</th>
-        <th>Height</th>
-        <th>Weight</th>
-        <th>Base Experience</th>
-        <th>Stats</th>
-        <th>Sprite</th>
-    </tr>
-    <tr  class="d-table-row">
-        <td>@Model.name</td>
-        <th>Types</th>
+        <th>Type</th>
         <th>Stats</th>
         <th>Height</th>
         <th>Weight</th>
@@ -36,17 +28,6 @@
         <td>@Model.height</td>
         <td>@Model.weight</td>
         <td>@Model.base_experience</td>
-        <td>
-        @foreach (var s in Model.stats)
-        {
-            <p>@s.stat.name: @s.base_stat</p>
-        }
-        </td>
-        <td><img src=@Model.sprites.front_default /></td>
-    </tr>
-</table>
-<table>
-    <tr>
         <td>
             <p>Normal</p>
             <img src=@Model.sprites.front_default />
