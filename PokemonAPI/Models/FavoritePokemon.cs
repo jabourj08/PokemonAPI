@@ -10,6 +10,12 @@ namespace PokemonAPI.Models
         public string NickName { get; set; }
         public int? PokemonId { get; set; }
         public string UserId { get; set; }
+        public string Type { get; set; }
+        public string Stats { get; set; }
+        public string Height { get; set; }
+        public string Weight { get; set; }
+        public string BaseExp { get; set; }
+        public string Sprite { get; set; }
 
         public virtual AspNetUsers User { get; set; }
     }
