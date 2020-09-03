@@ -30,6 +30,8 @@ namespace PokemonAPI.Controllers
             return View(pokemon);
         }
 
+
+
         public IActionResult Index()
         {
             return View();
