@@ -29,7 +29,13 @@ namespace PokemonAPI.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+<<<<<<< HEAD
                 optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=PokemonDb;Trusted_Connection=True;");
+=======
+                
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=PokemonDb;Trusted_Connection=True;");
+
+>>>>>>> 4977398e8ebf6d4b70172b2522dac3829979d635
             }
         }
 
@@ -171,7 +177,7 @@ namespace PokemonAPI.Models
                     .WithMany(p => p.FavoritePokemon)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__FavoriteP__UserI__5CD6CB2B");
+                    .HasConstraintName("FK__FavoriteP__UserI__4BAC3F29");
             });
 
             OnModelCreatingPartial(modelBuilder);
