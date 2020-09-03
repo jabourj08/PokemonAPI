@@ -4,7 +4,6 @@
 <table id="PokemonInfoTable" class="table table-bordered shadow table-hover table-info">
     <tr class="table table-bordered shadow table-hover table-info">
         <th>Name</th>
-<<<<<<< HEAD
         <th>Height</th>
         <th>Weight</th>
         <th>Base Experience</th>
@@ -13,7 +12,6 @@
     </tr>
     <tr  class="d-table-row">
         <td>@Model.name</td>
-=======
         <th>Types</th>
         <th>Stats</th>
         <th>Height</th>
@@ -35,12 +33,10 @@
                 <p>@s.stat.name: @s.base_stat</p>
             }
         </td>
->>>>>>> 2516b02fba0beadb171911135bae14d7dc76a761
         <td>@Model.height</td>
         <td>@Model.weight</td>
         <td>@Model.base_experience</td>
         <td>
-<<<<<<< HEAD
         @foreach (var s in Model.stats)
         {
             <p>@s.stat.name: @s.base_stat</p>
@@ -49,7 +45,9 @@
         <td><img src=@Model.sprites.front_default /></td>
     </tr>
 </table>
-=======
+<table>
+    <tr>
+        <td>
             <p>Normal</p>
             <img src=@Model.sprites.front_default />
             <p>Shiny</p>
@@ -59,4 +57,4 @@
 </table>
 
 <a href="../Pokemon/AddFavorite?id=@Model.id">Add to Favorites</a>
->>>>>>> 2516b02fba0beadb171911135bae14d7dc76a761
+

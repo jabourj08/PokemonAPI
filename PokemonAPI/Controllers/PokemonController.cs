@@ -12,11 +12,13 @@ namespace PokemonAPI.Controllers
     {
         private readonly PokemonDAL _pokemonDAL;
         private readonly PokemonDbContext _pokemonContext;
+        
 
         public PokemonController()
         {
             _pokemonDAL = new PokemonDAL();
             _pokemonContext = new PokemonDbContext();
+            _pokemon = new Pokemon();
 
         }
 
@@ -36,11 +38,10 @@ namespace PokemonAPI.Controllers
         {
             Pokemon pokemon = await _pokemonDAL.GetPokemon();
 
-<<<<<<< HEAD
             return RedirectToAction("SearchResults", pokemon);
-=======
-            return View("SearchResults", pokemon);
->>>>>>> 2516b02fba0beadb171911135bae14d7dc76a761
+
+           
+
         }
 
         [HttpPost]
@@ -71,6 +72,24 @@ namespace PokemonAPI.Controllers
             return View();
         }
 
+        public IActionResult Favorites()
+        {
+            
+            return View();
+        }
+      
+        public IActionResult UpdatePokemon(int id)
+        {
+            FavoritePokemon pokemonNickname = _pokemonContext.FavoritePokemon.Find(id);
+            if (pokemonNickname == null)
+            {
+                return RedirectToAction("Favorites");
+            }
+            else
+            {
+                return View(pokemonNickname);
+            }
+        }
         public async Task<IActionResult> AddPokemon(int id)
         {
             var newFav = new FavoritePokemon();
@@ -83,7 +102,7 @@ namespace PokemonAPI.Controllers
                 _pokemonContext.FavoritePokemon.Add(newFav);
                 _pokemonContext.SaveChanges(); 
             }
-            return RedirectToAction("Update", newFav.Id);
+            return RedirectToAction("UpdatePokemon", newFav.Id);
         }
     }
 }
