@@ -65,25 +65,25 @@
             </td>
 
             <td class="align-middle text-center">
-                <button class="btn-danger btn" onclick="confirmDelete()">Remove</button><br /><br />
-                <a href="../Pokemon/UpdatePokemon?id=@p.Id"><button class="btn-warning btn">Update</button></a>
+                <a href="../Pokemon/DeletePokemon?id=@p.Id"><button class="btn-danger btn" onclick="confirmDelete()">Remove</button><br /><br /></a>
+                    <a href="../Pokemon/UpdatePokemon?id=@p.Id"><button class="btn-warning btn">Update</button></a>
 
-                <script type="text/javascript">
-                    function confirmDelete() {
-                        var url = '../Pokemon/DeletePokemon?id=@p.Id';
-                        var c1 = confirm("Are you sure you want to delete this Pokemon? OK=Yes, Cancel=No")
-                        if (c1 == true) {
-                            var c2 = confirm("Are you REALLY sure you want to delete this Pokemon?? OK=Yes, Cancel=No")
-                            if (c2 == true) {
-                                var c3 = confirm("Are you REALLY REALLY sure you want to delete this Pokemon??? OK=Yes, Cancel=No")
-                                if (c3 == true) {
-                                    window.location.href = url;
-                                }
-                            }
+                    @*<script type="text/javascript">
+            function confirmDelete() {
+                var url = '../Pokemon/DeletePokemon?id=@p.Id';
+                var c1 = confirm("Are you sure you want to delete this Pokemon? OK=Yes, Cancel=No")
+                if (c1 == true) {
+                    var c2 = confirm("Are you REALLY sure you want to delete this Pokemon?? OK=Yes, Cancel=No")
+                    if (c2 == true) {
+                        var c3 = confirm("Are you REALLY REALLY sure you want to delete this Pokemon??? OK=Yes, Cancel=No")
+                        if (c3 == true) {
+                            window.location.href = url;
                         }
                     }
-                </script>
-            </td>
+                }
+            }
+        </script>*@
+</td>
         </tr>
     }
 </table>

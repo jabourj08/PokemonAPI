@@ -106,7 +106,7 @@ namespace PokemonAPI.Controllers
             }
         }
       
-        
+        [Authorize]
         public async Task<IActionResult> AddPokemon(int id) //adds and saves favorited pokemon to the database
         {
             string activeUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value; //finds the user id of the logged in user
