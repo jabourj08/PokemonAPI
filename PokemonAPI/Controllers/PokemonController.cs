@@ -69,16 +69,16 @@ namespace PokemonAPI.Controllers
             return View("SearchResultsType", pokemonType);
         }
 
-        public IActionResult UpdatePokemon(FavoritePokemon favoritePokemon)
+        public IActionResult UpdatePokemon(int id)
         {
-            //FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
-            if (favoritePokemon == null)
+            FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
+            if (pokemon == null)
             {
                 return RedirectToAction("Favorites");
             }
             else
             {
-                return View(favoritePokemon);
+                return View(pokemon);
             }
         }
         public IActionResult Index()
