@@ -31,7 +31,7 @@ namespace PokemonAPI.Controllers
             return View();
         }
 
-        public IActionResult Favoriteslol()
+        public IActionResult WhosThatPokemon()
         {
             return View();
         }
