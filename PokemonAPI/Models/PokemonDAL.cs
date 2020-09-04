@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -41,9 +42,16 @@ namespace PokemonAPI.Models
         {
             var client = GetClient();
             var response = await client.GetAsync($"pokemon/{searchName}");
-            var pokemon = await response.Content.ReadAsAsync<Pokemon>();
 
-            return pokemon;
+            if (response.IsSuccessStatusCode == true)
+            {
+                 var pokemon = await response.Content.ReadAsAsync<Pokemon>();
+                 return pokemon;
+            }
+            else
+            {
+                return null;
+            }
         }
         public async Task<Pokemon> GetPokemonById(int id)
         {

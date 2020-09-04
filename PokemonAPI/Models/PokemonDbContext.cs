@@ -145,9 +145,9 @@ namespace PokemonAPI.Models
                     .HasColumnName("height")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.Name).HasMaxLength(20);
+                entity.Property(e => e.Nickname).HasMaxLength(20);
 
-                entity.Property(e => e.NickName).HasMaxLength(50);
+                entity.Property(e => e.Nickname).HasMaxLength(50);
 
                 entity.Property(e => e.Sprite)
                     .HasColumnName("sprite")

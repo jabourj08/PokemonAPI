@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using PokemonAPI.Models;
 
 namespace PokemonAPI.Controllers
 {
@@ -32,6 +31,11 @@ namespace PokemonAPI.Controllers
             return View();
         }
 
+        public IActionResult WhosThatPokemon()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> GetPokemon()
         {
             Pokemon pokemon = await _pokemonDAL.GetPokemon();
@@ -42,14 +46,21 @@ namespace PokemonAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchPokemonByName(string searchName)
         {
+            if (searchName == null)
+            {
+                ViewBag.Message = "That's not a real Pokémon!  Try again!";
+                return View("SearchPokemon");
+            }
+            
             var pokemon = await _pokemonDAL.GetPokemonByName(searchName);
 
-            if (ModelState.IsValid)
+            if (pokemon != null)
             {
                 return View("SearchResults", pokemon);
             }
             else
             {
+                ViewBag.Message = "That's not a real Pokémon!  Try again!";
                 return View("SearchPokemon");
             }
             
@@ -62,13 +73,19 @@ namespace PokemonAPI.Controllers
             return View("SearchResults", pokemon);
         }
 
-        public async Task<IActionResult> SearchPokemonByType(string type)
+        [HttpPost]
+        public IActionResult UpdatePokemon(FavoritePokemon pokeName)
         {
-            var pokemonType = await _pokemonDAL.GetPokemonByType(type);
 
-            return View("SearchResultsType", pokemonType);
+            FavoritePokemon pokemonNickname = _pokemonContext.FavoritePokemon.Find(pokeName);
+
+            pokemonNickname.Nickname = pokeName.Nickname;
+            _pokemonContext.Entry(pokemonNickname).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _pokemonContext.Update(pokemonNickname);
+            _pokemonContext.SaveChanges();
+            return RedirectToAction("Favorites");
         }
-
+        [HttpGet]
         public IActionResult UpdatePokemon(int id)
         {
             FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
@@ -81,11 +98,26 @@ namespace PokemonAPI.Controllers
                 return View(pokemon);
             }
         }
+
+
+        public IActionResult SaveChanges(FavoritePokemon updatedName)
+        {
+            FavoritePokemon pokemonName = _pokemonContext.FavoritePokemon.Find(updatedName.Id);
+            pokemonName.Nickname = updatedName.Nickname;
+
+            _pokemonContext.Entry(pokemonName).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _pokemonContext.Update(pokemonName);
+            _pokemonContext.SaveChanges();
+
+            return RedirectToAction("Favorites");
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public IActionResult Favorites()
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -107,10 +139,7 @@ namespace PokemonAPI.Controllers
         
         public async Task<IActionResult> AddPokemon(int id)
         {
-            
             string activeUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value; //finds the user id of the logged in user
-
-
 
             var newFav = new FavoritePokemon();
             var newpokemon =await  _pokemonDAL.GetPokemonById(id);
@@ -168,6 +197,7 @@ namespace PokemonAPI.Controllers
                 _pokemonContext.SaveChanges();
             }
             return RedirectToAction("Favorites");
+
         }
     }
 }

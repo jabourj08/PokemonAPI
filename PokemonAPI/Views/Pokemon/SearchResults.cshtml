@@ -2,13 +2,12 @@
 
 
 <table id="PokemonInfoTable" class="table table-bordered shadow table-hover table-info">
-    <tr class="table table-bordered shadow table-hover table-info">
+    <tr  class="table table-bordered shadow table-hover table-info">
         <th>Name</th>
-        <th>Type</th>
+        <th>Types</th>
         <th>Stats</th>
         <th>Height</th>
         <th>Weight</th>
-        <th>Base Experience</th>
         <th>Sprite</th>
     </tr>
     <tr class="d-table-row">
@@ -27,7 +26,6 @@
         </td>
         <td>@Model.height</td>
         <td>@Model.weight</td>
-        <td>@Model.base_experience</td>
         <td>
             <p>Normal</p>
             <img src=@Model.sprites.front_default />
