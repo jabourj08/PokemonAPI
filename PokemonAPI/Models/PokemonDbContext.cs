@@ -1,11 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace PokemonAPI.Models
 {
     public partial class PokemonDbContext : DbContext
     {
+        public IConfiguration Configuration { get; } //copied from startup, using statement using Microsoft.Extensions.Configuration;
+
         public PokemonDbContext()
         {
         }
@@ -30,8 +33,8 @@ namespace PokemonAPI.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=PokemonDb;Trusted_Connection=True;");
-
+                optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=PokemonDb;Trusted_Connection=True;MultipleActiveResultSets=true"); //paste Configuration.GetConnectionString("DefaultConnection") from startup.cs
+                //have to redo this part each time you scaffold as it gets rewritten
             }
         }
 

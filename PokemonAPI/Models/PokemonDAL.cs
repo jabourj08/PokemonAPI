@@ -21,24 +21,24 @@ namespace PokemonAPI.Models
             return client;
         }
 
-        public async Task<string> GetRawJSON()
-        {
-            var client = GetClient();
-            var response = await client.GetAsync("pokemon/3");
-            var pokemonJSON = await response.Content.ReadAsStringAsync();
+        //public async Task<string> GetRawJSON()
+        //{
+        //    var client = GetClient();
+        //    var response = await client.GetAsync("pokemon/3");
+        //    var pokemonJSON = await response.Content.ReadAsStringAsync();
 
-            return pokemonJSON;
-        }
-        public async Task<Pokemon> GetPokemon()
-        {
-            var client = GetClient();
-            var response = await client.GetAsync("pokemon/3");
-            Pokemon pokemon = await response.Content.ReadAsAsync<Pokemon>();
+        //    return pokemonJSON;
+        //}
+        //public async Task<Pokemon> GetPokemon() 
+        //{
+        //    var client = GetClient();
+        //    var response = await client.GetAsync("pokemon/3");
+        //    Pokemon pokemon = await response.Content.ReadAsAsync<Pokemon>();
 
-            return pokemon;
-        }
+        //    return pokemon;
+        //}
 
-        public async Task<Pokemon> GetPokemonByName(string searchName)
+        public async Task<Pokemon> GetPokemonByName(string searchName) //searches api for pokemon by name
         {
             var client = GetClient();
             var response = await client.GetAsync($"pokemon/{searchName}");
@@ -53,18 +53,10 @@ namespace PokemonAPI.Models
                 return null;
             }
         }
-        public async Task<Pokemon> GetPokemonById(int id)
+        public async Task<Pokemon> GetPokemonById(int id) //searches api for pokemon by id number
         {
             var client = GetClient();
             var response = await client.GetAsync($"pokemon/{id.ToString()}");
-            var pokemon = await response.Content.ReadAsAsync<Pokemon>();
-
-            return pokemon;
-        }
-        public async Task<Pokemon> GetPokemonByType(string type)
-        {
-            var client = GetClient();
-            var response = await client.GetAsync($"type/{type}");
             var pokemon = await response.Content.ReadAsAsync<Pokemon>();
 
             return pokemon;

@@ -19,32 +19,32 @@ namespace PokemonAPI.Controllers
             _pokemonContext = new PokemonDbContext();
         }
 
-        public async Task<IActionResult> PokemonJSON()
-        {
-            var pokemonJSON = await _pokemonDAL.GetRawJSON();
+        //public async Task<IActionResult> PokemonJSON()
+        //{
+        //    var pokemonJSON = await _pokemonDAL.GetRawJSON();
 
-            return View(pokemonJSON);
-        }
+        //    return View(pokemonJSON);
+        //}
 
         public IActionResult SearchPokemon()
         {
             return View();
         }
 
-        public IActionResult WhosThatPokemon()
+        public IActionResult WhosThatPokemon()  //easter egg nod to the show
         {
             return View();
         }
 
-        public async Task<IActionResult> GetPokemon()
-        {
-            Pokemon pokemon = await _pokemonDAL.GetPokemon();
+        //public async Task<IActionResult> GetPokemon()  //
+        //{
+        //    Pokemon pokemon = await _pokemonDAL.GetPokemon();
 
-            return View(pokemon);
-        }
+        //    return View(pokemon);
+        //}
 
         [HttpPost]
-        public async Task<IActionResult> SearchPokemonByName(string searchName)
+        public async Task<IActionResult> SearchPokemonByName(string searchName)  //searches the API for Pokemon by name with validation in case name is not found
         {
             if (searchName == null)
             {
@@ -66,31 +66,31 @@ namespace PokemonAPI.Controllers
             
         }
 
-        public async Task<IActionResult> SearchPokemonById(int id)
+        public async Task<IActionResult> SearchPokemonById(int id) //searches the API for Pokemon by Id
         {
             var pokemon = await _pokemonDAL.GetPokemonById(id);
 
             return View("SearchResults", pokemon);
         }
 
-        [HttpPost]
-        public IActionResult UpdatePokemon(FavoritePokemon pokeName)
-        {
+        //[HttpPost]
+        //public IActionResult UpdatePokemon(FavoritePokemon pokeName) 
+        //{
 
-            FavoritePokemon pokemonNickname = _pokemonContext.FavoritePokemon.Find(pokeName);
+        //    FavoritePokemon pokemonNickname = _pokemonContext.FavoritePokemon.Find(pokeName);
 
-            pokemonNickname.Nickname = pokeName.Nickname;
-            _pokemonContext.Entry(pokemonNickname).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _pokemonContext.Update(pokemonNickname);
-            _pokemonContext.SaveChanges();
-            return RedirectToAction("Favorites");
-        }
-        [HttpGet]
-        public IActionResult UpdatePokemon(int id)
+        //    pokemonNickname.Nickname = pokeName.Nickname;
+        //    _pokemonContext.Entry(pokemonNickname).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        //    _pokemonContext.Update(pokemonNickname);
+        //    _pokemonContext.SaveChanges();
+        //    return RedirectToAction("Favorites");
+        //}
+        
+        //[HttpGet]
+        public IActionResult UpdatePokemon(int id) 
         {
             FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);
             if (pokemon == null)
-
             {
                 return RedirectToAction("Favorites");
             }
@@ -101,7 +101,7 @@ namespace PokemonAPI.Controllers
         }
 
 
-        public IActionResult SaveChanges(FavoritePokemon updatedName)
+        public IActionResult SaveChanges(FavoritePokemon updatedName) //saves changes when user adds nickname to favorited pokemon
         {
             FavoritePokemon pokemonName = _pokemonContext.FavoritePokemon.Find(updatedName.Id);
             pokemonName.Nickname = updatedName.Nickname;
@@ -113,13 +113,8 @@ namespace PokemonAPI.Controllers
             return RedirectToAction("Favorites");
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [Authorize]
-        public IActionResult Favorites()
+        public IActionResult Favorites() //navigates to favorite pokemon view with filtering if a user is logged in
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
@@ -138,7 +133,7 @@ namespace PokemonAPI.Controllers
         }
       
         
-        public async Task<IActionResult> AddPokemon(int id)
+        public async Task<IActionResult> AddPokemon(int id) //adds and saves favorited pokemon to the database
         {
             string activeUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value; //finds the user id of the logged in user
 
@@ -149,7 +144,7 @@ namespace PokemonAPI.Controllers
             string statConcat = "";
             string spriteConcat = "";
 
-            for (int i = 0; i < newpokemon.types.Length; i++)
+            for (int i = 0; i < newpokemon.types.Length; i++) //turns types information into a comma separated value to store in db
             {
                 typeConcat += newpokemon.types[i].type.name;
                 if (i != newpokemon.types.Length - 1)
@@ -158,7 +153,7 @@ namespace PokemonAPI.Controllers
                 }
             }
 
-            for (int i = 0; i < newpokemon.stats.Length; i++)
+            for (int i = 0; i < newpokemon.stats.Length; i++) //turns stats information into a comma separated value to store in db
             {
                 statConcat += newpokemon.stats[i].stat.name;
                 statConcat += ": ";
@@ -169,7 +164,7 @@ namespace PokemonAPI.Controllers
                 }
             }
 
-            spriteConcat += newpokemon.sprites.front_default + "," + newpokemon.sprites.front_shiny;
+            spriteConcat += newpokemon.sprites.front_default + "," + newpokemon.sprites.front_shiny; //turns sprites information into a comma separated value to store in db
 
             newFav.Name = newpokemon.name;
             newFav.PokemonId = newpokemon.id;
@@ -189,7 +184,7 @@ namespace PokemonAPI.Controllers
             return RedirectToAction("Favorites");
         }
 
-        public IActionResult DeletePokemon(int id)
+        public IActionResult DeletePokemon(int id) //removes pokemon from the favorites list
         {
             var deletePokemon = _pokemonContext.FavoritePokemon.Find(id);
             if (deletePokemon != null)
