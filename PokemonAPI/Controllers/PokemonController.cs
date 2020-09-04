@@ -19,12 +19,6 @@ namespace PokemonAPI.Controllers
             _pokemonContext = new PokemonDbContext();
         }
 
-        //public async Task<IActionResult> PokemonJSON()
-        //{
-        //    var pokemonJSON = await _pokemonDAL.GetRawJSON();
-
-        //    return View(pokemonJSON);
-        //}
 
         public IActionResult SearchPokemon()
         {
@@ -36,12 +30,6 @@ namespace PokemonAPI.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> GetPokemon()  //
-        //{
-        //    Pokemon pokemon = await _pokemonDAL.GetPokemon();
-
-        //    return View(pokemon);
-        //}
 
         [HttpPost]
         public async Task<IActionResult> SearchPokemonByName(string searchName)  //searches the API for Pokemon by name with validation in case name is not found
@@ -73,20 +61,6 @@ namespace PokemonAPI.Controllers
             return View("SearchResults", pokemon);
         }
 
-        //[HttpPost]
-        //public IActionResult UpdatePokemon(FavoritePokemon pokeName) 
-        //{
-
-        //    FavoritePokemon pokemonNickname = _pokemonContext.FavoritePokemon.Find(pokeName);
-
-        //    pokemonNickname.Nickname = pokeName.Nickname;
-        //    _pokemonContext.Entry(pokemonNickname).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        //    _pokemonContext.Update(pokemonNickname);
-        //    _pokemonContext.SaveChanges();
-        //    return RedirectToAction("Favorites");
-        //}
-        
-        //[HttpGet]
         public IActionResult UpdatePokemon(int id) 
         {
             FavoritePokemon pokemon = _pokemonContext.FavoritePokemon.Find(id);

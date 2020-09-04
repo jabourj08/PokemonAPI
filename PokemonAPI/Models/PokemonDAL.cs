@@ -21,23 +21,6 @@ namespace PokemonAPI.Models
             return client;
         }
 
-        //public async Task<string> GetRawJSON()
-        //{
-        //    var client = GetClient();
-        //    var response = await client.GetAsync("pokemon/3");
-        //    var pokemonJSON = await response.Content.ReadAsStringAsync();
-
-        //    return pokemonJSON;
-        //}
-        //public async Task<Pokemon> GetPokemon() 
-        //{
-        //    var client = GetClient();
-        //    var response = await client.GetAsync("pokemon/3");
-        //    Pokemon pokemon = await response.Content.ReadAsAsync<Pokemon>();
-
-        //    return pokemon;
-        //}
-
         public async Task<Pokemon> GetPokemonByName(string searchName) //searches api for pokemon by name
         {
             var client = GetClient();
