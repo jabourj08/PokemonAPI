@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,12 @@ namespace PokemonAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchPokemonByName(string searchName)
         {
+            if (searchName == null)
+            {
+                ViewBag.Message = "That's not a real Pokémon!  Try again!";
+                return View("SearchPokemon");
+            }
+            
             var pokemon = await _pokemonDAL.GetPokemonByName(searchName);
 
             if (pokemon != null)
@@ -53,6 +60,7 @@ namespace PokemonAPI.Controllers
             }
             else
             {
+                ViewBag.Message = "That's not a real Pokémon!  Try again!";
                 return View("SearchPokemon");
             }
             
@@ -65,12 +73,6 @@ namespace PokemonAPI.Controllers
             return View("SearchResults", pokemon);
         }
 
-        public async Task<IActionResult> SearchPokemonByType(string type)
-        {
-            var pokemonType = await _pokemonDAL.GetPokemonByType(type);
-
-            return View("SearchResultsType", pokemonType);
-        }
         [HttpPost]
         public IActionResult UpdatePokemon(FavoritePokemon pokeName)
         {
@@ -82,7 +84,6 @@ namespace PokemonAPI.Controllers
             _pokemonContext.Update(pokemonNickname);
             _pokemonContext.SaveChanges();
             return RedirectToAction("Favorites");
-           // return View();
         }
         [HttpGet]
         public IActionResult UpdatePokemon(int id)
@@ -117,6 +118,7 @@ namespace PokemonAPI.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Favorites()
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -142,8 +144,6 @@ namespace PokemonAPI.Controllers
 
             var newFav = new FavoritePokemon();
             var newpokemon =await  _pokemonDAL.GetPokemonById(id);
-
-            //newFav.Nickname = newpokemon.name;
 
             string typeConcat = "";
             string statConcat = "";
